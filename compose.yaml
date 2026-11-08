@@ -1,0 +1,26 @@
+services:
+  hub:
+    build: .
+    restart: unless-stopped
+    environment:
+      HUB_ADMIN_PASSWORD: ${HUB_ADMIN_PASSWORD:?Run ./scripts/init-env.sh first}
+      HUB_SESSION_SECRET: ${HUB_SESSION_SECRET:?Run ./scripts/init-env.sh first}
+      HUB_DATA_DIR: /data
+      HUB_MAX_UPLOAD_MB: ${HUB_MAX_UPLOAD_MB:-100}
+      HUB_COOKIE_SECURE: ${HUB_COOKIE_SECURE:-0}
+    ports:
+      - "${HUB_BIND_IP:-0.0.0.0}:${HUB_PORT:-8090}:8090"
+    volumes:
+      - hub_data:/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/api/v1/health',timeout=4)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+volumes:
+  hub_data:

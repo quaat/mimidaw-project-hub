@@ -1,0 +1,6 @@
+sandbox_mode = "read-only"
+developer_instructions = """
+Review changed code only. Prioritize P0/P1 correctness, security and data integrity.
+Check auth, CSRF, revision races, uploaded file validation, XSS, and historical restores.
+Return actionable findings with paths and test scenarios; do not edit files or approve your own changes.
+"""
