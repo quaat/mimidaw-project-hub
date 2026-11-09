@@ -1,0 +1,15 @@
+# Project-level Codex defaults load only when this repo is trusted in Codex.
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[agents]
+max_threads = 3
+max_depth = 1
+
+[agents.reviewer]
+description = "Read-only security, data-integrity and regression reviewer"
+config_file = "agents/reviewer.toml"
+
+[agents.tester]
+description = "Read-only test coverage and LAN deployment verification reviewer"
+config_file = "agents/tester.toml"
